@@ -1,4 +1,4 @@
-#Using AWS S3 trigger to create thumbnail image
+# Using AWS S3 trigger to create thumbnail image
 
 This project demonstrates how to automatically resize images uploaded to an Amazon S3 bucket using AWS Lambda. When a new image is added to the source bucket, the Lambda function is triggered, generates a thumbnail, and stores it in a destination bucket — all provisioned using Terraform.
 
