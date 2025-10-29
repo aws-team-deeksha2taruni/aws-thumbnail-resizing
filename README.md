@@ -1,6 +1,55 @@
-# Using AWS S3 trigger to create thumbnail image
+# Create Thumbnail Images with AWS Lambda & S3 Trigger
 
-This project demonstrates how to automatically resize images uploaded to an Amazon S3 bucket using AWS Lambda. When a new image is added to the source bucket, the Lambda function is triggered, generates a thumbnail, and stores it in a destination bucket — all provisioned using Terraform.
+This project demonstrates how to create and configure an AWS Lambda function that automatically generates thumbnail images when a new image is uploaded to an Amazon S3 bucket. The Lambda function resizes the image and saves the thumbnail in a same S3 bucket.
+
+## Prerequisites
+
+- AWS account with permissions to create S3 buckets, Lambda functions, IAM roles, and policies.
+- AWS CLI installed and configured (optional, you can use AWS Console).
+- Python or Node.js installed locally if creating deployment package manually.
+- (Windows users) May need Windows Subsystem for Linux (WSL) to use bash commands like `zip`.
+
+
+## Step 1: Create Source and Destination S3 Buckets
+
+Create bucket:
+
+- **Source bucket**: Where you upload original images.
+- **Destination bucket**: Where Lambda will store the generated thumbnails.
+
+![Alt text](pictures/bucketCreated.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 To set up this workflow, you’ll need:
 
