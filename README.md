@@ -4,7 +4,7 @@
 This project demonstrates how to create and configure an AWS Lambda function that automatically generates thumbnail images when a new image is uploaded to an Amazon S3 bucket. The Lambda function resizes the image and saves the thumbnail in a same S3 bucket.
 
 ## Workflow Diagram:
-![Alt text](pictures/AWS Image Resizing Workflow Diagram.png)
+![Alt text](pictures/AWS%20Image%20Resizing%20Workflow%20Diagram.png)
 
 
 ## Prerequisites
