@@ -17,7 +17,48 @@ Create bucket:
 - **Source bucket**: Where you upload original images.
 - **Destination bucket**: Where Lambda will store the generated thumbnails.
 
-![Alt text](pictures/bucketCreated.png)
+picture dalni h.....................
+
+## Step 2: Upload a Test Image to Source Bucket
+
+Upload any JPG or PNG image to your source bucket to test the Lambda function later.
+
+picture dalni h........................
+
+## Step 3: Create a Permissions Policy for Lambda
+
+Create an IAM policy which grants permission for the Lambda function to:
+
+- Read objects from the source S3 bucket
+- Write objects to the destination S3 bucket
+- Write logs to CloudWatch Logs
+
+Example policy JSON snippet:
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::source-bucket-name/*",
+        "arn:aws:s3:::destination-bucket-name/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
 
 
 
