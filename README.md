@@ -27,29 +27,39 @@ Create bucket:
 
 4.Under General configuration, do the following:
 
- a.For Bucket type, ensure General purpose is selected.
+   a.For Bucket type, ensure General purpose is selected.
  
- b.For Bucket name, enter a globally unique name that meets the Amazon S3 Bucket naming rules. Bucket names can contain only lower case letters, numbers, dots (.), and hyphens (-).
+   b.For Bucket name, enter a globally unique name that meets the Amazon S3 Bucket naming rules. Bucket names can contain only lower case letters, numbers, dots (.), and hyphens (-).
  
 5.Leave all other options set to their default values and choose Create bucket.
 
 Repeat steps 1 to 5 to create your destination bucket. For Bucket name, enter amzn-s3-demo-source-bucket-resized, where amzn-s3-source-bucket is the name of the source bucket you just created.
 
 - **Source bucket**: Where you upload original images.
-- **Destination bucket**: Where Lambda will store the generated thumbnails.
+- **Destination bucket**: Where Lambda will store the generated thumbnail images.
 
 ![Alt text](pictures/bucketCreated.png)
 
 
-## Step 2: Upload a Test Image to Source Bucket
+## Step 2: Upload a Test Image to the Source Bucket
 
-Upload any JPG or PNG image to your source bucket to test the Lambda function later.
+To upload a test image to your source bucket (console)
+
+1.Open the Buckets page of the Amazon S3 console.
+
+2.Select the source bucket you created in the previous step.
+
+3.Choose Upload.
+
+4.Choose Add files and use the file selector to choose the object you want to upload.
+
+5.Choose Open, then choose Upload.
 
 ![Alt text](pictures/bucketWimage.png)
 
 ***
 
-## Step 3: Create a Permissions Policy for Lambda
+## Step 3: Create a Permission Policy 
 
 Create an IAM policy which grants permission for the Lambda function to:
 
@@ -57,7 +67,15 @@ Create an IAM policy which grants permission for the Lambda function to:
 - Write objects to the destination S3 bucket
 - Write logs to CloudWatch Logs
 
-Example policy JSON snippet:
+## To create the policy (console)
+
+1.Open the Policies page of the AWS Identity and Access Management (IAM) console.
+
+2.Choose Create policy.
+
+3.Choose the JSON tab, and then paste the following custom policy into the JSON editor.
+
+## Example policy JSON snippet:
 
 ```json
 {
@@ -66,33 +84,76 @@ Example policy JSON snippet:
     {
       "Effect": "Allow",
       "Action": [
+        "logs:PutLogEvents",
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream"
+      ],
+      "Resource": "arn:aws:logs:*:*:*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
         "s3:GetObject",
-        "s3:PutObject"
+        "s3:ListBucket"
       ],
       "Resource": [
-        "arn:aws:s3:::source-bucket-name/*",
-        "arn:aws:s3:::destination-bucket-name/*"
+        "arn:aws:s3:::your-source-bucket-name",
+        "arn:aws:s3:::your-source-bucket-name/*"
       ]
     },
     {
       "Effect": "Allow",
       "Action": [
-        "logs:CreateLogGroup",
-        "logs:CreateLogStream",
-        "logs:PutLogEvents"
+        "s3:PutObject"
       ],
-      "Resource": "*"
+      "Resource": [
+        "arn:aws:s3:::your-destination-bucket-name/*"
+      ]
     }
   ]
 }
+
 ```
+
+## Replace your-source-bucket-name and your-destination-bucket-name with your original source and destination bucket names.
+
+4.Choose Next.
+
+5.Under Policy details, for Policy name, enter LambdaS3Policy.
+
+6.Choose Create policy.
+
 
 ![Alt text](pictures/IAMpolicy.png)
 
 
-## Step 4: Create an Execution Role and Attach Policy
+## Step 4: Create an Execution Role
+
+An execution role is an IAM role that grants a Lambda function permission to access AWS services and resources. To give your function read and write access to an Amazon S3 bucket, you attach the permissions policy you created in the previous step.
 
 Create an IAM role for Lambda with the above IAM policy attached. This role allows the Lambda function to access the needed AWS resources.
+
+## To create an execution role and attach your permissions policy (console)
+
+1.Open the Roles page of the (IAM) console.
+
+2.Choose Create role.
+
+3.For Trusted entity type, select AWS service, and for Use case, select Lambda.
+
+4.Choose Next.
+
+5.Add the permissions policy you created in the previous step by doing the following:
+
+  a.In the policy search box, enter LambdaS3Policy.
+
+  b.In the search results, select the check box for LambdaS3Policy.
+
+  c.Choose Next.
+
+6.Under Role details, for the Role name enter LambdaS3Role.
+
+7.Choose Create role.
 
 ![Alt text](pictures/IAMrOLE.png)
 
