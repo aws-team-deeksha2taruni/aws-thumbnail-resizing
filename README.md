@@ -1,7 +1,7 @@
 
 # Create Thumbnail Images with AWS Lambda & S3 Trigger
 
-This project demonstrates how to create and configure an AWS Lambda function that automatically generates thumbnail images when a new image is uploaded to an Amazon S3 bucket. The Lambda function resizes the image and saves the thumbnail in a same S3 bucket.
+In this project, we create and configure a Lambda function that resizes images added to an Amazon Simple Storage Service (Amazon S3) bucket. When we add an image file to our bucket, Amazon S3 invokes our Lambda function. The function then creates a thumbnail version of the image and outputs it to a different Amazon S3 bucket.
 
 ## Workflow Diagram:
 ![Alt text](pictures/AWS%20Image%20Resizing%20Workflow%20Diagram.png)
@@ -9,7 +9,7 @@ This project demonstrates how to create and configure an AWS Lambda function tha
 
 ## Prerequisites
 
-- AWS account with permissions to create S3 buckets, Lambda functions, IAM roles, and policies.
+- AWS account with permissions to create S3 buckets and Lambda functions using relevant IAM roles and policies.
 - AWS CLI installed and configured (optional, you can use AWS Console).
 - Python or Node.js installed locally if creating deployment package manually.
 - (Windows users) May need Windows Subsystem for Linux (WSL) to use bash commands like `zip`.
@@ -19,6 +19,14 @@ This project demonstrates how to create and configure an AWS Lambda function tha
 
 Create bucket:
 
+1.Open the Amazon S3 console and select the General purpose buckets page.
+2.Select the AWS Region closest to your geographical location. You can change your region using the drop-down list at the top of the screen. Later in the project, we must create our Lambda function in the same Region.
+3.Choose Create bucket.
+4.Under General configuration, do the following:
+ a.For Bucket type, ensure General purpose is selected.
+ b.For Bucket name, enter a globally unique name that meets the Amazon S3 Bucket naming rules. Bucket names can contain only lower case letters, numbers, dots (.), and hyphens (-).
+5.Leave all other options set to their default values and choose Create bucket.
+Repeat steps 1 to 5 to create your destination bucket. For Bucket name, enter amzn-s3-demo-source-bucket-resized, where amzn-s3-source-bucket is the name of the source bucket you just created.
 - **Source bucket**: Where you upload original images.
 - **Destination bucket**: Where Lambda will store the generated thumbnails.
 
