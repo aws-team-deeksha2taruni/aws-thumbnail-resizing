@@ -209,8 +209,9 @@ def lambda_handler(event, context):
 EOF
 ```
 3.Create a directory for dependencies
-
+```
 mkdir package
+```
 
 4.Install dependencies into the package directory
 ```
@@ -247,32 +248,140 @@ aws s3 cp lambda_function.zip s3://your-source-bucket-name/
 
 Create the Lambda function using AWS Console or CLI:
 
-- Choose runtime (Python or Node.js)
-- Assign the execution role created earlier
-- Upload the deployment package
- 
- 
+1.Open the Functions page of the Lambda console.
+
+2.Make sure you're working in the same AWS Region you created your Amazon S3 bucket in. You can change your region using the drop-down list at the top of the screen.
+
+3.Choose Create function.
+
+4.Choose Author from scratch.
+
+5.Under Basic information, do the following:
+
+- For Function name, enter CreateThumbnail.
+
+- For Runtime, choose Python 3.12 .
+
+- For Architecture, choose x86_64.
+
+6.In the Change default execution role tab, do the following:
+
+- Expand the tab, then choose Use an existing role.
+
+- Select the LambdaS3Role you created earlier.
+
+7.Choose Create function.
+
+## To upload the function code (console)
+
+1.In the Code source pane, choose Upload from.
+
+2.Choose from S3 bucket.
+
+3.Copy object URL of the zip file and paste it.
+
+4.Click save.
+
 ![Alt text](pictures/lambdafunctionCode.png)
 
 ***
 
 ## Step 7: Configure Amazon S3 to Invoke the Lambda Function
 
-Add an S3 trigger to the Lambda function for the source bucket, configured to run on object-created events (upload).
+For your Lambda function to run when you upload an image to your source bucket, you need to configure a trigger for your function.
 
-**Important:** Configure trigger only on the source bucket to avoid infinite invocation loops.
+## To configure the Amazon S3 trigger (console)
+
+1.Open the Functions page of the Lambda console and choose your function (CreateThumbnail).
+
+2.Choose Add trigger.
+
+3.Select S3.
+
+4.Under Bucket, select your source bucket.
+
+5.Under Event types, select All object create events.
+
+6.Under Recursive invocation, select the check box to acknowledge that using the same Amazon S3 bucket for input and output is not recommended. You can learn more about recursive invocation patterns in Lambda by reading Recursive patterns that cause run-away Lambda functions in Serverless Land.
+
+7.Choose Add.
+
+When you create a trigger using the Lambda console, Lambda automatically creates a resource based policy to give the service you select permission to invoke your function.
 ![Alt text](pictures/triggerDetail.png)
 ***
 
 ## Step 8: Test Lambda Function with a Dummy Event
 
-Invoke the Lambda function manually with a sample event to confirm it responds correctly.
+1.Open the Functions page of the Lambda console and choose your function (CreateThumbnail).
+
+2.Choose the Test tab.
+
+3.To create your test event, in the Test event pane, do the following:
+
+a. Under Test event action, select Create new event.
+
+b. For Event name, enter myTestEvent.
+
+c. Replace the values for the following parameters with your own values.
+
+- For awsRegion, replace us-east-1 with the AWS Region you created your Amazon S3 buckets in.
+
+- For name, replace your-source-bucket-name with the name of your own Amazon S3 source bucket.
+
+- For key, replace test%2Fkey with the filename of the test object you uploaded to your source bucket in the step Upload a test image to your source bucket.
+
+- Choose save
+
+```
+{
+  "Records": [
+    {
+      "eventVersion": "2.0",
+      "eventSource": "aws:s3",
+      "awsRegion": "ap-south-1",
+      "eventTime": "1970-01-01T00:00:00.000Z",
+      "eventName": "ObjectCreated:Put",
+      "userIdentity": {
+        "principalId": "EXAMPLE"
+      },
+      "requestParameters": {
+        "sourceIPAddress": "127.0.0.1"
+      },
+      "responseElements": {},
+      "s3": {
+        "s3SchemaVersion": "1.0",
+        "configurationId": "testConfigRule",
+        "bucket": {
+          "name": "your-source-bucket-name",
+          "ownerIdentity": {
+            "principalId": "EXAMPLE"
+          },
+          "arn": "arn:aws:s3:::your-source-bucket-name"
+        },
+        "object": {
+          "key": "test%2Fkey",
+          "eTag": "0123456789abcdef0123456789abcdef"
+        }
+      }
+    }
+  ]
+}
+
+```
+
+4.In the Test event pane, choose Test.
+
+5.To check the your function has created a resized verison of your image and stored it in your target Amazon S3 bucket, do the following:
+
+- Open the Buckets page of the Amazon S3 console.
+
+- Choose your target bucket and confirm that your resized file is listed in the Objects pane.
 ![Alt text](pictures/testcode.png)
 ***
 
 ## Step 9: Test Your Function Using the Amazon S3 Trigger
 
-Upload a new image file to the source bucket. Verify the Lambda function is triggered and a thumbnail is created in the destination bucket.
+Upload a new image file to the source bucket. Verify the Lambda function is triggered and a thumbnail image is created in the destination bucket.
 
 ![Alt text](pictures/destinationWithRszdimage.png)
 
@@ -280,22 +389,49 @@ Upload a new image file to the source bucket. Verify the Lambda function is trig
 
 ## Step 10: Clean Up Resources
 
-To avoid charges, delete:
+You can now delete the resources that you created for this project, unless you want to retain them. By deleting AWS resources that you're no longer using, you prevent unnecessary charges to your AWS account.
 
-- Lambda function
-- IAM policy and role created
-- S3 buckets created (empty first if required)
+## To delete the Lambda function
 
+1.Open the Functions page of the Lambda console.
 
-# Additional Notes
+2.Select the function that you created.
 
-- Ensure triggers are carefully configured only on the source bucket.
-- Monitor function logs in CloudWatch for debugging and verification.
-- This setup can be extended for other automatic image processing tasks.
+3.Choose Actions, Delete.
 
-(if you are working on windows and tried creating zip files manually and it is saying lambda_function.py or module not found error showing then 
-try creating all files packages , and zip files on aws cli and upload it to code folder inside s3 bucket then in lambda function go to >> upload from >> aws location >> s3 bucket name >> code/ >>lambda_function.zip )
+4.Type confirm in the text input field and choose Delete.
 
+## To delete the policy that you created
+
+1.Open the Policies page of the IAM console.
+
+2.Select the policy that you created (AWSLambdaS3Policy).
+
+3.Choose Policy actions, Delete.
+
+4.Choose Delete.
+
+## To delete the execution role
+
+1.Open the Roles page of the IAM console.
+
+2.Select the execution role that you created.
+
+3.Choose Delete.
+
+4.Enter the name of the role in the text input field and choose Delete.
+
+## To delete the S3 bucket
+
+1.Open the Amazon S3 console.
+
+2.Select the bucket you created.
+
+3.Choose Delete.
+
+4.Enter the name of the bucket in the text input field.
+
+5.Choose Delete bucket.
 
  ## Commands required:
 
