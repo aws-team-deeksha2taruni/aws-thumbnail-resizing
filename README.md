@@ -28,7 +28,6 @@ In this project, we create and configure a Lambda function that resizes images a
 4.Under General configuration, do the following:
 
    - For Bucket type, ensure General purpose is selected.
- 
    - For Bucket name, enter a globally unique name that meets the Amazon S3 Bucket naming rules. Bucket names can contain only lower case letters, numbers, dots (.), and hyphens (-).
  
 5.Leave all other options set to their default values and choose Create bucket.
@@ -163,10 +162,84 @@ To create a function, you create a deployment package containing your function c
 
 Package your Lambda function code and dependencies. For example, with Python and Pillow library:
 
+Open AWS Cloudshell
+
 - Create a folder
 - Add your Lambda function script `lambda_function.py`
-- Install Pillow in this folder (e.g., `pip install Pillow -t .`)
+- Install Pillow in this folder 
 - Zip all contents into a deployment package `.zip`
+
+ ## Step-by-Step Commands for CloudShell
+
+1. Create working directory and navigate into it
+- mkdir thumbnail-generator && cd thumbnail-generator
+2. Create your Lambda function code file
+
+```python
+cat <<EOF > lambda_function.py
+import boto3
+import os
+import sys
+import uuid
+from urllib.parse import unquote_plus
+from PIL import Image
+
+s3_client = boto3.client('s3')
+
+def resize_image(image_path, resized_path):
+    with Image.open(image_path) as image:
+        image.thumbnail(tuple(x / 2 for x in image.size))
+        image.save(resized_path)
+
+def lambda_handler(event, context):
+    for record in event['Records']:
+        bucket = record['s3']['bucket']['name']
+        key = unquote_plus(record['s3']['object']['key'])
+        tmpkey = key.replace('/', '')
+        download_path = '/tmp/{}{}'.format(uuid.uuid4(), tmpkey)
+        upload_path = '/tmp/resized-{}'.format(tmpkey)
+
+        s3_client.download_file(bucket, key, download_path)
+        resize_image(download_path, upload_path)
+        s3_client.upload_file(
+            upload_path,
+            '{}-resized'.format(bucket),
+            'resized-{}'.format(key)
+        )
+EOF
+```
+3.Create a directory for dependencies
+
+mkdir package
+
+4.Install dependencies into the package directory
+```
+pip install \
+--platform manylinux2014_x86_64 \
+--target=package \
+--implementation cp \
+--python-version 3.12 \
+--only-binary=:all: --upgrade \
+pillow boto3
+```
+
+5.Zip the dependencies
+```
+cd package
+zip -r ../lambda_function.zip .
+cd ..
+```
+
+6.Add your Lambda function code to the zip
+```
+zip lambda_function.zip lambda_function.py
+```
+
+7.Upload the zip file to your S3 source bucket
+```
+aws s3 cp lambda_function.zip s3://your-source-bucket-name/
+```
+
 
 ![Alt text](pictures/packagelibr.png)
 
