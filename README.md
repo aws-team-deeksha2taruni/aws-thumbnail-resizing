@@ -17,7 +17,7 @@ In this project, we create and configure a Lambda function that resizes images a
 
 ## Step 1: Create Source and Destination S3 Buckets
 
-Create bucket:
+## Create bucket:
 
 1.Open the Amazon S3 console and select the General purpose buckets page.
 
@@ -27,9 +27,9 @@ Create bucket:
 
 4.Under General configuration, do the following:
 
-   a.For Bucket type, ensure General purpose is selected.
+   - For Bucket type, ensure General purpose is selected.
  
-   b.For Bucket name, enter a globally unique name that meets the Amazon S3 Bucket naming rules. Bucket names can contain only lower case letters, numbers, dots (.), and hyphens (-).
+   - For Bucket name, enter a globally unique name that meets the Amazon S3 Bucket naming rules. Bucket names can contain only lower case letters, numbers, dots (.), and hyphens (-).
  
 5.Leave all other options set to their default values and choose Create bucket.
 
@@ -145,11 +145,9 @@ Create an IAM role for Lambda with the above IAM policy attached. This role allo
 
 5.Add the permissions policy you created in the previous step by doing the following:
 
-  a.In the policy search box, enter LambdaS3Policy.
-
-  b.In the search results, select the check box for LambdaS3Policy.
-
-  c.Choose Next.
+  - In the policy search box, enter LambdaS3Policy.
+  - In the search results, select the check box for LambdaS3Policy.
+  - Choose Next.
 
 6.Under Role details, for the Role name enter LambdaS3Role.
 
@@ -160,6 +158,8 @@ Create an IAM role for Lambda with the above IAM policy attached. This role allo
 ***
 
 ## Step 5: Create the Function Deployment Package
+
+To create a function, you create a deployment package containing your function code and its dependencies. For this CreateThumbnail function, your function code uses a separate library for the image resizing.
 
 Package your Lambda function code and dependencies. For example, with Python and Pillow library:
 
