@@ -11,7 +11,7 @@ In this project, we create and configure a Lambda function that resizes images a
 
 - AWS account with permissions to create S3 buckets and Lambda functions using relevant IAM roles and policies.
 - AWS CLI installed and configured (optional, you can use AWS Console).
-- Python or Node.js installed locally if creating deployment package manually.
+- Python installed locally if creating deployment package manually.
 - (Windows users) May need Windows Subsystem for Linux (WSL) to use bash commands like `zip`.
 
 
@@ -21,7 +21,7 @@ In this project, we create and configure a Lambda function that resizes images a
 
 1.Open the Amazon S3 console and select the General purpose buckets page.
 
-2.Select the AWS Region closest to your geographical location. You can change your region using the drop-down list at the top of the screen. Later in the project, we must create our Lambda function in the same Region.
+2.Select the AWS Region closest to your geographical location. You can change your region using the drop-down list at the top of the screen. Later in the project, you must create your Lambda function in the same Region.
 
 3.Choose Create bucket.
 
@@ -172,7 +172,11 @@ Open AWS Cloudshell
  ## Step-by-Step Commands for CloudShell
 
 1. Create working directory and navigate into it
+```
 - mkdir thumbnail-generator && cd thumbnail-generator
+
+```
+
 2. Create your Lambda function code file
 
 ```python
@@ -246,7 +250,7 @@ aws s3 cp lambda_function.zip s3://your-source-bucket-name/
 
 ## Step 6: Create the Lambda Function
 
-Create the Lambda function using AWS Console or CLI:
+Create the Lambda function using AWS Console:
 
 1.Open the Functions page of the Lambda console.
 
@@ -302,7 +306,7 @@ For your Lambda function to run when you upload an image to your source bucket, 
 
 5.Under Event types, select All object create events.
 
-6.Under Recursive invocation, select the check box to acknowledge that using the same Amazon S3 bucket for input and output is not recommended. You can learn more about recursive invocation patterns in Lambda by reading Recursive patterns that cause run-away Lambda functions in Serverless Land.
+6.Under Recursive invocation, select the check box to acknowledge that using the same Amazon S3 bucket for input and output is not recommended. 
 
 7.Choose Add.
 
@@ -330,7 +334,6 @@ c. Replace the values for the following parameters with your own values.
 
 - For key, replace test%2Fkey with the filename of the test object you uploaded to your source bucket in the step Upload a test image to your source bucket.
 
-- Choose save
 
 ```
 {
@@ -369,6 +372,8 @@ c. Replace the values for the following parameters with your own values.
 
 ```
 
+- Choose save
+  
 4.In the Test event pane, choose Test.
 
 5.To check the your function has created a resized verison of your image and stored it in your target Amazon S3 bucket, do the following:
