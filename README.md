@@ -311,7 +311,7 @@ For your Lambda function to run when you upload an image to your source bucket, 
 7.Choose Add.
 
 When you create a trigger using the Lambda console, Lambda automatically creates a resource based policy to give the service you select permission to invoke your function.
-![Alt text](pictures/triggerDetail.png)
+![Alt text](pictures/triggerdetail10.png)
 ***
 
 ## Step 8: Test Lambda Function with a Dummy Event
