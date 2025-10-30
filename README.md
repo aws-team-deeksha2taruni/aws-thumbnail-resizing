@@ -20,13 +20,21 @@ In this project, we create and configure a Lambda function that resizes images a
 Create bucket:
 
 1.Open the Amazon S3 console and select the General purpose buckets page.
+
 2.Select the AWS Region closest to your geographical location. You can change your region using the drop-down list at the top of the screen. Later in the project, we must create our Lambda function in the same Region.
+
 3.Choose Create bucket.
+
 4.Under General configuration, do the following:
+
  a.For Bucket type, ensure General purpose is selected.
+ 
  b.For Bucket name, enter a globally unique name that meets the Amazon S3 Bucket naming rules. Bucket names can contain only lower case letters, numbers, dots (.), and hyphens (-).
+ 
 5.Leave all other options set to their default values and choose Create bucket.
+
 Repeat steps 1 to 5 to create your destination bucket. For Bucket name, enter amzn-s3-demo-source-bucket-resized, where amzn-s3-source-bucket is the name of the source bucket you just created.
+
 - **Source bucket**: Where you upload original images.
 - **Destination bucket**: Where Lambda will store the generated thumbnails.
 
