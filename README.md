@@ -438,7 +438,7 @@ You can now delete the resources that you created for this project, unless you w
 
 5.Choose Delete bucket.
 
- ## Commands required:
+ ## Commands required for Terraform:
 
 $ terraform init
 
