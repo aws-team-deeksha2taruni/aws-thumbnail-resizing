@@ -37,7 +37,7 @@ Repeat steps 1 to 5 to create your destination bucket. For Bucket name, enter am
 - **Source bucket**: Where you upload original images.
 - **Destination bucket**: Where Lambda will store the generated thumbnail images.
 
-![Alt text](pictures/bucketCreated.png)
+![Alt text](pictures/source-dest-bucket.png)
 
 
 ## Step 2: Upload a Test Image to the Source Bucket
