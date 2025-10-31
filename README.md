@@ -54,7 +54,7 @@ To upload a test image to your source bucket (console)
 
 5.Choose Open, then choose Upload.
 
-![Alt text](pictures/bucketWimage.png)
+![Alt text](pictures/test-images.png)
 
 ***
 
