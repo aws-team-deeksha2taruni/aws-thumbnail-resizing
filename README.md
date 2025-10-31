@@ -246,7 +246,7 @@ aws s3 cp lambda_function.zip s3://your-source-bucket-name/
 ```
 
 
-![Alt text](pictures/packagelibr.png)
+![Alt text](pictures/cloudshell-cmd.png)
 
 ## Step 6: Create the Lambda Function
 
@@ -286,7 +286,7 @@ Create the Lambda function using AWS Console:
 
 4.Click save.
 
-![Alt text](pictures/lambdafunctionCode.png)
+![Alt text](pictures/lambda-function.png)
 
 ***
 
@@ -381,14 +381,14 @@ c. Replace the values for the following parameters with your own values.
 - Open the Buckets page of the Amazon S3 console.
 
 - Choose your target bucket and confirm that your resized file is listed in the Objects pane.
-![Alt text](pictures/testcode.png)
+![Alt text](pictures/test-function.png)
 ***
 
 ## Step 9: Test Your Function Using the Amazon S3 Trigger
 
 Upload a new image file to the source bucket. Verify the Lambda function is triggered and a thumbnail image is created in the destination bucket.
 
-![Alt text](pictures/destinationWithRszdimage.png)
+![Alt text](pictures/thumbnail-images.png)
 
 ***
 
