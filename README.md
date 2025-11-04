@@ -42,7 +42,7 @@ This project automates image resizing using AWS S3, Lambda, and Terraform. When 
 
 5. **Test Upload Triggers Lambda:**  
 
-   1[test image](pictures/source%20bucket%20file.png)
+   ![test image](pictures/source%20bucket%20file.png)
 
 6. **Resized Image in Destination Bucket:**  
 
