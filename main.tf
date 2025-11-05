@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket = "terraform-state-cicd-bucket"
+    bucket = "terraform-state-cicd-bucket1"
     key    = "lambda/terraform.tfstate"
     region = "ap-south-1"
   }
@@ -20,3 +20,4 @@ provider "aws" {
 }
 
 # Load S3, IAM, and Lambda configurations from respective files
+
