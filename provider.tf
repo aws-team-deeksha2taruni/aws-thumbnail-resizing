@@ -1,3 +1,5 @@
+
+# Configure the AWS provider
 provider "aws" {
-  region = "ap-south-1"  # or your preferred region
+  region = var.aws_region  # Uses variable defined in variables.tf
 }
