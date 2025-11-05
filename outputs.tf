@@ -1,14 +1,23 @@
+# Output for IAM Policy ARN
 output "iam_policy_arn" {
-  description = "IAM Policy ARN"
-  value       = aws_iam_policy.lambda_s3_policy.arn
+  description = "The ARN of the IAM policy attached to the Lambda function"
+  value       = aws_iam_policy.lambda_policy.arn
 }
 
+# Output for Lambda Function Name
 output "lambda_function_name" {
-  description = "Lambda Function Name"
-  value       = aws_lambda_function.create_thumbnail_lambda_function.function_name
+  description = "The name of the Lambda function"
+  value       = aws_lambda_function.image_resizer.function_name
 }
 
-output "cloudwatch_log_group_arn" {
-  description = "CloudWatch Log Group ARN"
-  value       = aws_cloudwatch_log_group.create_thumbnail_lambda_function_cloudwatch.arn
+# Output for Lambda Function ARN
+output "lambda_function_arn" {
+  description = "The ARN of the Lambda function"
+  value       = aws_lambda_function.image_resizer.arn
+}
+
+# Optional: Output for IAM Role ARN (helpful for debugging)
+output "lambda_role_arn" {
+  description = "The ARN of the IAM role assumed by Lambda"
+  value       = aws_iam_role.lambda_role.arn
 }

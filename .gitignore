@@ -1,13 +1,32 @@
-# Terraform
+# Ignore Terraform local state files and backup logs
+*.tfstate
+*.tfstate.*
 .terraform/
-.terraform.lock.hcl
-terraform.tfstate
-terraform.tfstate.*
+
+# Ignore Terraform crash logs
 crash.log
-*.tfvars
-override.tf
-override.tf.json
-*_override.tf
-*_override.tf.json
-.terraformrc
-terraform.rc
+
+# Ignore Python cache files and folders
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore package folder dependencies (usually large)
+package/
+
+# Ignore VS Code workspace settings and extensions files
+.vscode/
+
+# Ignore any distribution or build folders
+dist/
+build/
+
+# Ignore log files and runtime caches
+*.log
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore pictures folder if it contains large test images (if not required in repo)
+
