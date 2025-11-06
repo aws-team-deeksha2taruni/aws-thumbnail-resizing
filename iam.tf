@@ -1,4 +1,4 @@
-# Custom IAM Policy for Lambda
+# Custom IAM Policy for Lambda to access S3 and CloudWatch
 resource "aws_iam_policy" "lambda_policy" {
   name = "lambda_s3_image_resizer_policy"
 
@@ -32,7 +32,7 @@ resource "aws_iam_policy" "lambda_policy" {
   })
 }
 
-# IAM Role that allows Lambda to be assumed by the Lambda service
+# IAM Role for Lambda execution
 resource "aws_iam_role" "lambda_role" {
   name = "lambda_execution_role"
 
@@ -56,7 +56,7 @@ resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
-# Attach your custom Lambda S3 access policy
+# Attach custom Lambda S3 access policy
 resource "aws_iam_role_policy_attachment" "lambda_s3_policy" {
   role       = aws_iam_role.lambda_role.name
   policy_arn = aws_iam_policy.lambda_policy.arn
