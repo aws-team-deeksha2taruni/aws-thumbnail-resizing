@@ -32,7 +32,7 @@ resource "aws_iam_policy" "lambda_policy" {
   })
 }
 
-# IAM Role for Lambda execution
+# IAM Role that allows Lambda to be assumed by the Lambda service
 resource "aws_iam_role" "lambda_role" {
   name = "lambda_execution_role"
 
@@ -56,7 +56,7 @@ resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
-# Attach custom Lambda S3 access policy
+# Attach your custom Lambda S3 access policy
 resource "aws_iam_role_policy_attachment" "lambda_s3_policy" {
   role       = aws_iam_role.lambda_role.name
   policy_arn = aws_iam_policy.lambda_policy.arn
