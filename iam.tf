@@ -1,3 +1,4 @@
+# Custom IAM Policy that allows Lambda to access S3 and CloudWatch Logs
 resource "aws_iam_policy" "lambda_policy" {
   name = "lambda_s3_image_resizer_policy"
 
@@ -27,6 +28,10 @@ resource "aws_iam_policy" "lambda_policy" {
           "${aws_s3_bucket.resized_images.arn}/*"
         ]
       }
+    ]
+  })
+}
+
 # IAM Role that allows Lambda to be assumed by the Lambda service
 resource "aws_iam_role" "lambda_role" {
   name = "lambda_execution_role"
@@ -56,8 +61,3 @@ resource "aws_iam_role_policy_attachment" "lambda_s3_policy" {
   role       = aws_iam_role.lambda_role.name
   policy_arn = aws_iam_policy.lambda_policy.arn
 }
-
-    ]
-  })
-}
-
