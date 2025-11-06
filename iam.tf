@@ -1,4 +1,4 @@
-# Custom IAM Policy that allows Lambda to access S3 and CloudWatch Logs
+# Custom IAM Policy for Lambda
 resource "aws_iam_policy" "lambda_policy" {
   name = "lambda_s3_image_resizer_policy"
 
