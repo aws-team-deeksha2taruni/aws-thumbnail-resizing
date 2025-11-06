@@ -1,3 +1,21 @@
+# IAM Role that allows Lambda to be assumed by the Lambda service
+resource "aws_iam_role" "lambda_role" {
+  name = "lambda_execution_role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "lambda.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
 # Custom IAM Policy for Lambda to access S3 and CloudWatch
 resource "aws_iam_policy" "lambda_policy" {
   name = "lambda_s3_image_resizer_policy"
@@ -27,24 +45,6 @@ resource "aws_iam_policy" "lambda_policy" {
           aws_s3_bucket.resized_images.arn,
           "${aws_s3_bucket.resized_images.arn}/*"
         ]
-      }
-    ]
-  })
-}
-
-# IAM Role that allows Lambda to be assumed by the Lambda service
-resource "aws_iam_role" "lambda_role" {
-  name = "lambda_execution_role"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Principal = {
-          Service = "lambda.amazonaws.com"
-        }
       }
     ]
   })
