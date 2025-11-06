@@ -15,9 +15,8 @@ terraform {
   }
 }
 
-provider "aws" {
-  region = var.aws_region
-}
+
 
 # Load S3, IAM, and Lambda configurations from respective files
+
 
