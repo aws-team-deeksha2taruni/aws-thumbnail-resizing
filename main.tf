@@ -1,6 +1,10 @@
-# Terraform configuration
-# Loads provider requirements; actual resources are in other .tf files
 terraform {
+  backend "s3" {
+    bucket = "terraform-state-cicd-bucket1"
+    key    = "lambda/terraform.tfstate"
+    region = "ap-south-1"
+  }
+
   required_version = ">= 1.0.0"
 
   required_providers {
@@ -11,6 +15,9 @@ terraform {
   }
 }
 
-# Include provider configuration (defined in providers.tf)
-# Include S3, IAM, and Lambda configurations from respective files
+provider "aws" {
+  region = var.aws_region
+}
+
+# Load S3, IAM, and Lambda configurations from respective files
 
