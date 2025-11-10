@@ -9,12 +9,17 @@ resource "aws_lambda_function" "image_resizer" {
   filename         = "lambda_function_payload.zip"
   source_code_hash = filebase64sha256("lambda_function_payload.zip")
 
-  # Environment variables for Lambda (optional)
+  # Environment variables for Lambda
   environment {
     variables = {
       THUMBNAIL_BUCKET = aws_s3_bucket.resized_images.bucket
     }
   }
+
+  # Include pre-built Pillow layer for Python 3.12
+  layers = [
+    "arn:aws:lambda:ap-south-1:764866452798:layer:Klayers-python3.12-Pillow:40"
+  ]
 }
 
 # Allow S3 to invoke the Lambda function
